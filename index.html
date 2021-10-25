@@ -28,6 +28,9 @@
                alert(err.error);
             });
 		}
+		function login(){
+		    location.href = "login.html";
+		}
 	</script>
 </head>
 
@@ -47,8 +50,8 @@
 	    	<input type="submit" value="注册">
 	    </div>
 	</div>
-	<div class="login-bottom">
-		<h3>&nbsp;<a href="#"></a>&nbsp;</h3>
+	<div class="login-bottom" onclick="login()">
+		<h3>老用户 &nbsp;<a href="#">登录</a>&nbsp 点击这里</h3>
 	</div>
 </div>	
 <div class="copyright">
