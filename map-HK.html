@@ -17,7 +17,7 @@ var option;
 
 
 myChart.showLoading();
-$.get('810000_full.json', function (geoJson) {
+$.get('json/810000_full.json', function (geoJson) {
   myChart.hideLoading();
   echarts.registerMap('HK', geoJson);
   myChart.setOption(
