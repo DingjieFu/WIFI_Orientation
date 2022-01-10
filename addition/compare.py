@@ -8,15 +8,41 @@ from sklearn import neighbors
 import matplotlib.pyplot as plt
 from sklearn.model_selection import GridSearchCV
 
+
+# 计算ndarray的均值矩阵
+def mean_array(data):
+    data_row = data.shape[1]
+    data_r = np.mean(data, axis=1).reshape(-1, 1)
+    temp = data_r
+    for i in range(data_row-1):
+        data_r = np.hstack((data_r, temp))
+    return data_r
+
+
 # 导入离线文件和在线文件
 offline_data = scio.loadmat(r'..\database\offline_data.mat')
 online_data = scio.loadmat(r'..\database\online_data.mat')
 # 分别获取离线文件和在线文件的rss指纹以及位置
-offline_location, offline_rss = offline_data['offline_location'], offline_data['offline_rss']
-trace, rss = online_data['trace'], online_data['rss']
+offline_location, offline_rss = offline_data['offline_location'], offline_data['offline_rss']  # 训练集
+trace, rss = online_data['trace'], online_data['rss']  # 测试集
 # 删除无关变量，释放内存空间
 del online_data
 del offline_data
+
+mean_offline_location = mean_array(offline_location)
+mean_offline_rss = mean_array(offline_rss)
+mean_trace = mean_array(trace)
+mean_rss = mean_array(rss)
+
+offline_location = offline_location/mean_offline_location
+offline_rss = offline_rss/mean_offline_rss
+trace = trace/mean_trace
+rss = rss/mean_rss
+
+# print(np.mean(offline_location, axis=1).shape)
+# print(np.mean(offline_rss, axis=1).shape)
+# print(np.mean(rss, axis=1).shape)
+# print(np.mean(trace, axis=1).shape)
 
 
 # 定位精度，定义为Euclidean距离
@@ -64,8 +90,8 @@ def compare_cdf():
              label=f"WK_KNN(k={best_k_wk_nnc})")
     plt.xlabel('distance estimation error(m)'), plt.ylabel('percentage')
     plt.legend()
-    plt.savefig('NN_KNN_WKNNC.jpg')
-    # plt.show()
+    # plt.savefig('NN_KNN_WKNNC.jpg')
+    plt.show()
 
 
 if __name__ == '__main__':
