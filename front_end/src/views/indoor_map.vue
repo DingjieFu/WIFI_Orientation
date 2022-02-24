@@ -11,14 +11,14 @@
                 :key="item.id"
                 target=""
                 alt=""
-                v-bind:title="item.rss"
+                v-bind:title="'RSS：'+item.rss+'\n'+'xLabel:'+item.xlabel+'\n'+'yLabel:'+item.ylabel"
                 href=""
                 v-bind:coords="
                     parseInt(19.5 * item.ylabel + 107.7) +
                     ',' +
                     parseInt(-20 * item.xlabel + 616.6) +
                     ',' +
-                    5
+                    7
                 "
                 shape="circle"
             />

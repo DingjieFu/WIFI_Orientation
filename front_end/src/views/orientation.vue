@@ -6,7 +6,7 @@
         </div>
         <div class="position" v-if="location != ''">
             Prediction :
-            <td class="opttd">{{ testLocation }}</td>
+            <td class="opttd">{{ location }}</td>
         </div>
         <div class="position" v-else>
             Prediction :
@@ -20,7 +20,22 @@
             Real :
             <td class="deftd">真实坐标将显示在此处</td>
         </div>
+        <div class="position" v-if="testDisplay == 1">
+            Accuracy :
+            <td class="opttd">
+                NN: {{ accuracy[0] }}, KNN: {{ accuracy[1] }}, WK-NNC:
+                {{ accuracy[2] }}
+            </td>
+        </div>
+        <div class="position" v-else>
+            Accuracy :
+            <td class="deftd">NN准确度, KNN准确度, WKNNC准确度</td>
+        </div>
         <button @click="submit">上传RSS</button>
+        <button @click="test">算法测试</button>
+        <div v-if="testDisplay == 1" class="view">
+            <img src="../assets/NN_KNN_WKNNC.jpg" />
+        </div>
         <div class="view" style="position: relative">
             <img src="../assets/img/DJ室内布局图.svg" />
             <a
@@ -30,7 +45,7 @@
                     parseInt(19.5 * location[1] + 453.7) +
                     'px;top:' +
                     parseInt(-20 * location[0] + 616.6) +
-                    'px;width:7px;height:7px;background:#207f4c'
+                    'px;width:7px;height:7px;border-radius:50%;background:#207f4c'
                 "
             ></a>
             <a
@@ -40,7 +55,7 @@
                     parseInt(19.5 * testLocation[1] + 453.7) +
                     'px;top:' +
                     parseInt(-20 * testLocation[0] + 616.6) +
-                    'px;width:7px;height:7px;background:#ec2b24'
+                    'px;width:7px;height:7px;border-radius:50%;background:#ec2b24'
                 "
             ></a>
         </div>
@@ -59,6 +74,8 @@ export default {
             location: [],
             rssList: [],
             testLocation: [],
+            testDisplay: 0,
+            accuracy: "",
         };
     },
     mounted() {},
@@ -80,6 +97,24 @@ export default {
                     console.log(res);
                     this.location = res.data[0];
                     this.testLocation = res.data[1];
+                });
+            }
+        },
+        test() {
+            if (this.testDisplay == 0) {
+                this.testDisplay = 1;
+            } else {
+                this.testDisplay = 0;
+                this.accuracy = "";
+            }
+            if (this.testDisplay == 1) {
+                axios({
+                    url: "http://127.0.0.1:9000/algorithmTest",
+                    method: "get",
+                    type: "json",
+                }).then((res) => {
+                    console.log(res.data[0]);
+                    this.accuracy = res.data;
                 });
             }
         },

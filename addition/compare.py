@@ -29,15 +29,15 @@ trace, rss = online_data['trace'], online_data['rss']  # 测试集
 del online_data
 del offline_data
 
-mean_offline_location = mean_array(offline_location)
-mean_offline_rss = mean_array(offline_rss)
-mean_trace = mean_array(trace)
-mean_rss = mean_array(rss)
-
-offline_location = offline_location/mean_offline_location
-offline_rss = offline_rss/mean_offline_rss
-trace = trace/mean_trace
-rss = rss/mean_rss
+# mean_offline_location = mean_array(offline_location)
+# mean_offline_rss = mean_array(offline_rss)
+# mean_trace = mean_array(trace)
+# mean_rss = mean_array(rss)
+#
+# offline_location = offline_location/mean_offline_location
+# offline_rss = offline_rss/mean_offline_rss
+# trace = trace/mean_trace
+# rss = rss/mean_rss
 
 # print(np.mean(offline_location, axis=1).shape)
 # print(np.mean(offline_rss, axis=1).shape)

@@ -58,6 +58,7 @@
                     <tr v-for="data in tableContent" :key="data.id">
                         <td v-for="item in data" :key="item">
                             <!-- {{ item.toFixed(2) }} -->
+                            <!--此处用于将数据保留两位小数 不补零 -->
                             {{
                                 Math.round(item * Math.pow(10, 2)) /
                                 Math.pow(10, 2)
@@ -233,7 +234,9 @@ export default {
                 },
                 type: "json",
             }).then((res) => {
-                console.log(res), this.getTestTable();
+                console.log(res.data);
+                if (res.data == "Already exists!") alert(res.data);
+                this.getTestTable();
                 this.controlSwitch("default");
             });
         },
